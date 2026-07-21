@@ -1,0 +1,154 @@
+@import "tailwindcss";
+
+@theme inline {
+  /* Island Vibes Color Palette */
+  --color-ocean-50: #E8F4F8;
+  --color-ocean-100: #C5E5F0;
+  --color-ocean-200: #9ED5E8;
+  --color-ocean-300: #6FC0DD;
+  --color-ocean-400: #4AACC9;
+  --color-ocean-500: #1B6B93;
+  --color-ocean-600: #155E82;
+  --color-ocean-700: #0F4C6B;
+  --color-ocean-800: #0A3A54;
+  --color-ocean-900: #06283D;
+
+  --color-gold-50: #FFF9ED;
+  --color-gold-100: #FFF1D2;
+  --color-gold-200: #FFE2A5;
+  --color-gold-300: #FFCF6B;
+  --color-gold-400: #FFBA33;
+  --color-gold-500: #D4941A;
+  --color-gold-600: #A8720F;
+  --color-gold-700: #7D5308;
+  --color-gold-800: #523504;
+  --color-gold-900: #2E1D00;
+
+  --color-emerald-50: #EDF8F0;
+  --color-emerald-100: #D2F0DC;
+  --color-emerald-200: #A8E2BC;
+  --color-emerald-300: #6FCF97;
+  --color-emerald-400: #3FB870;
+  --color-emerald-500: #1B8755;
+  --color-emerald-600: #157046;
+  --color-emerald-700: #105939;
+  --color-emerald-800: #0B422B;
+  --color-emerald-900: #062B1C;
+
+  --color-sand-50: #FEFAF5;
+  --color-sand-100: #FDF3E5;
+  --color-sand-200: #FAE4C8;
+  --color-sand-300: #F5D1A7;
+  --color-sand-400: #EDBA82;
+  --color-sand-500: #D2B48C;
+  --color-sand-600: #A88B65;
+  --color-sand-700: #7D6343;
+  --color-sand-800: #523E26;
+  --color-sand-900: #2E2010;
+
+  --color-coral-500: #FF7F50;
+  --color-coral-400: #FF9B75;
+  --color-coral-300: #FFB39A;
+  --color-coral-200: #FFCCBF;
+  --color-coral-100: #FFE5DE;
+
+  --color-background: var(--color-sand-50);
+  --color-foreground: var(--color-ocean-900);
+
+  --font-sans: "Inter", "Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Playfair Display", "Georgia", serif;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+
+  --animate-wave: wave 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-slide-up: slideUp 0.5s ease-out forwards;
+  --animate-shimmer: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes wave {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-4px) rotate(1deg); }
+  75% { transform: translateY(4px) rotate(-1deg); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shimmer {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Base styles */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: linear-gradient(180deg, #FEFAF5 0%, #FDF3E5 30%, #E8F4F8 100%);
+  color: #06283D;
+  font-family: var(--font-sans);
+  min-height: 100vh;
+}
+
+/* Tropical decorative elements */
+.tropical-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(circle at 20% 80%, rgba(27, 107, 147, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(212, 148, 26, 0.05) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+/* Palm leaf accent divider */
+.palm-divider {
+  position: relative;
+  text-align: center;
+}
+.palm-divider::after {
+  content: "🌴";
+  font-size: 1.5rem;
+  position: absolute;
+  bottom: -1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-sand-100);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-ocean-300);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-ocean-500);
+}
+
+/* Selection */
+::selection {
+  background: var(--color-gold-300);
+  color: var(--color-ocean-900);
+}
