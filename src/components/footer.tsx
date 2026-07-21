@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
-import { MapPin, Phone, Mail, Sparkles } from "lucide-react";
+import { MapPin, Phone, Mail, Sparkles, Key } from "lucide-react";
 import { FacebookIcon, InstagramIcon, YoutubeIcon } from "@/components/icons";
+import { OtpAdminModal } from "@/components/otp-admin-modal";
 
 const footerLinks = {
   shop: {
@@ -40,6 +42,8 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const [showAdminModal, setShowAdminModal] = useState(false);
+
   return (
     <footer className="bg-ocean-900 text-sand-200">
       {/* Top wave divider */}
@@ -201,16 +205,29 @@ export function Footer() {
         {/* Bottom bar */}
         <div className="border-t border-ocean-700 mt-8 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-ocean-500">
           <p>&copy; 2026 Island Vibe Treasures. All rights reserved.</p>
-          <div className="flex gap-4">
+          <div className="flex items-center gap-4">
             <Link href="/privacy" className="hover:text-ocean-300 transition-colors">
               Privacy Policy
             </Link>
             <Link href="/terms" className="hover:text-ocean-300 transition-colors">
               Terms of Service
             </Link>
+            <button
+              onClick={() => setShowAdminModal(true)}
+              className="text-gold-400 hover:text-gold-300 font-semibold flex items-center gap-1 transition-colors"
+            >
+              <Key className="w-3.5 h-3.5" />
+              Passcode Security
+            </button>
           </div>
         </div>
       </div>
+
+      <OtpAdminModal
+        isOpen={showAdminModal}
+        onClose={() => setShowAdminModal(false)}
+      />
     </footer>
   );
 }
+
