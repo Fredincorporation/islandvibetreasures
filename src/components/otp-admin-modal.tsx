@@ -322,16 +322,9 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
                 </button>
               </div>
 
-              <div className="flex items-center gap-2">
-                <label className="text-xs text-ocean-700 flex items-center gap-1.5 cursor-pointer font-medium">
-                  <input
-                    type="checkbox"
-                    checked={singleUseMode}
-                    onChange={toggleSingleUseMode}
-                    className="rounded border-ocean-300 text-ocean-600 focus:ring-ocean-500"
-                  />
-                  Enforce Single-Use Mode
-                </label>
+              <div className="flex items-center gap-1.5 text-xs text-ocean-800 font-semibold bg-gold-100/90 border border-gold-300 px-3 py-1.5 rounded-lg shadow-2xs">
+                <ShieldCheck className="w-4 h-4 text-gold-700" />
+                <span>Strictly One-Time Use (Valid Until Redeemed)</span>
               </div>
             </div>
 

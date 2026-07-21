@@ -245,12 +245,12 @@ export function OtpGate({ children }: OtpGateProps) {
                 One-Time Password Access
               </h1>
               <p className="text-sm text-ocean-700 max-w-sm mx-auto leading-relaxed">
-                This website is passcode protected. Please enter your valid <strong className="text-ocean-900">One-Time Password (OTP)</strong> to enter.
+                This website is passcode protected. Passcodes are <strong className="text-ocean-900">one-time use</strong> (valid until redeemed) and grant a 20-minute access session.
               </p>
 
               <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-ocean-100/80 border border-ocean-200/80 rounded-full text-xs font-semibold text-ocean-800">
                 <Clock className="w-3.5 h-3.5 text-ocean-600" />
-                <span>Cookies auto-expire every 20 minutes</span>
+                <span>20-Minute Session Timeout</span>
               </div>
 
               {/* Success Banner */}

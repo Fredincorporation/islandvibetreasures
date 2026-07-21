@@ -110,14 +110,14 @@ export const useOtpStore = create<OtpState>()(
 
         const match = state.otpCodes[existingIndex];
 
-        if (state.singleUseMode && match.isUsed) {
+        if (match.isUsed) {
           return {
             success: false,
-            message: `This One-Time Password (${match.code}) has already been redeemed.`,
+            message: `This One-Time Password (${match.code}) has already been redeemed by a user and cannot be used again.`,
           };
         }
 
-        // Mark code as used if single-use mode is enabled
+        // Mark code as used immediately upon redemption
         const updatedCodes = [...state.otpCodes];
         updatedCodes[existingIndex] = {
           ...match,
