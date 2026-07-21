@@ -17,6 +17,7 @@ import {
   ShieldCheck, 
   Info,
   ShieldAlert,
+  Clock,
   ArrowRight
 } from "lucide-react";
 
@@ -215,9 +216,13 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
                       : "bg-coral-100 text-coral-800 border border-coral-300"
                   }`}>
                     {isAuthenticated ? <Unlock className="w-3 h-3" /> : <Lock className="w-3 h-3" />}
-                    {isAuthenticated ? "Unlocked" : "Locked (OTP Required)"}
+                    {isAuthenticated ? "Unlocked (20-min session)" : "Locked (OTP Required)"}
                   </span>
                 </div>
+                <p className="text-[11px] text-ocean-600 mt-1 flex items-center gap-1">
+                  <Clock className="w-3 h-3 text-ocean-500" />
+                  Cookies auto-expire after 20 minutes of security inactivity.
+                </p>
 
                 <div className="mt-3 flex items-center gap-2">
                   {isAuthenticated ? (

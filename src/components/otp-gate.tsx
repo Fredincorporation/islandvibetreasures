@@ -12,6 +12,7 @@ import {
   Sparkles, 
   CheckCircle2, 
   AlertCircle,
+  Clock,
   Eye,
   EyeOff,
   HelpCircle
@@ -52,13 +53,46 @@ export function OtpGate({ children }: OtpGateProps) {
 
   useEffect(() => {
     setMounted(true);
-    // Check initial auth cookie if present
-    if (typeof document !== "undefined") {
+    
+    const checkSessionStatus = () => {
+      if (typeof document === "undefined") return;
+
+      const state = useOtpStore.getState();
       const match = document.cookie.match(new RegExp("(^| )ivt_otp_authenticated=([^;]+)"));
-      if (match && match[2] === "true") {
-        useOtpStore.getState().unlockSite();
+      const hasValidCookie = match && match[2] === "true";
+
+      const now = Date.now();
+      const authenticatedAt = state.authenticatedAt;
+      const SESSION_TIMEOUT_MS = 20 * 60 * 1000; // 20 minutes
+      const isExpiredByTime = authenticatedAt ? (now - authenticatedAt >= SESSION_TIMEOUT_MS) : false;
+
+      if (state.isAuthenticated) {
+        if (!hasValidCookie || isExpiredByTime) {
+          state.lockSite();
+          toast.error("Your 20-minute session has expired. Please enter your passcode again.");
+        }
+      } else {
+        if (hasValidCookie && authenticatedAt && !isExpiredByTime) {
+          state.unlockSite();
+        }
       }
-    }
+    };
+
+    checkSessionStatus();
+    const interval = setInterval(checkSessionStatus, 3000);
+
+    const handleFocusOrVisibility = () => {
+      checkSessionStatus();
+    };
+
+    window.addEventListener("focus", handleFocusOrVisibility);
+    document.addEventListener("visibilitychange", handleFocusOrVisibility);
+
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener("focus", handleFocusOrVisibility);
+      document.removeEventListener("visibilitychange", handleFocusOrVisibility);
+    };
   }, []);
 
   // Auto focus first pin input box
@@ -213,6 +247,11 @@ export function OtpGate({ children }: OtpGateProps) {
               <p className="text-sm text-ocean-700 max-w-sm mx-auto leading-relaxed">
                 This website is passcode protected. Please enter your valid <strong className="text-ocean-900">One-Time Password (OTP)</strong> to enter.
               </p>
+
+              <div className="mt-3 inline-flex items-center gap-1.5 px-3 py-1 bg-ocean-100/80 border border-ocean-200/80 rounded-full text-xs font-semibold text-ocean-800">
+                <Clock className="w-3.5 h-3.5 text-ocean-600" />
+                <span>Cookies auto-expire every 20 minutes</span>
+              </div>
 
               {/* Success Banner */}
               {unlockedSuccess && (

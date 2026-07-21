@@ -33,11 +33,13 @@ function normalizeCode(str: string): string {
   return str.trim().toUpperCase().replace(/[\s\-_]/g, "");
 }
 
-function setAuthCookie(value: boolean) {
+const SESSION_DURATION_SECONDS = 20 * 60; // 20 minutes (1200 seconds)
+
+function setAuthCookie(value: boolean, maxAgeSeconds: number = SESSION_DURATION_SECONDS) {
   if (typeof document !== "undefined") {
-    if (value) {
-      // Set cookie for 30 days
-      document.cookie = `ivt_otp_authenticated=true; path=/; max-age=${60 * 60 * 24 * 30}; SameSite=Lax`;
+    if (value && maxAgeSeconds > 0) {
+      // Set cookie for 20 minutes
+      document.cookie = `ivt_otp_authenticated=true; path=/; max-age=${maxAgeSeconds}; SameSite=Lax`;
     } else {
       document.cookie = "ivt_otp_authenticated=; path=/; max-age=0";
     }
@@ -46,6 +48,7 @@ function setAuthCookie(value: boolean) {
 
 interface OtpState {
   isAuthenticated: boolean;
+  authenticatedAt: number | null;
   singleUseMode: boolean;
   otpCodes: OtpCode[];
   masterPasscode: string;
@@ -68,9 +71,10 @@ export const useOtpStore = create<OtpState>()(
   persist(
     (set, get) => ({
       isAuthenticated: false,
+      authenticatedAt: null,
       singleUseMode: true,
       otpCodes: INITIAL_OTP_CODES,
-      masterPasscode: "ALOHA2026",
+      masterPasscode: "BIGFREDFOREVER2099",
       hasHydrated: false,
 
       verifyOtp: (inputCode: string) => {
@@ -80,14 +84,15 @@ export const useOtpStore = create<OtpState>()(
         }
 
         const state = get();
+        const now = Date.now();
 
         // Check master passcode
         if (cleanInput === normalizeCode(state.masterPasscode)) {
-          set({ isAuthenticated: true });
-          setAuthCookie(true);
+          set({ isAuthenticated: true, authenticatedAt: now });
+          setAuthCookie(true, SESSION_DURATION_SECONDS);
           return {
             success: true,
-            message: "Master Passcode accepted! Welcome to Island Vibe Treasures.",
+            message: "Master Passcode accepted! Session valid for 20 minutes.",
           };
         }
 
@@ -122,25 +127,27 @@ export const useOtpStore = create<OtpState>()(
 
         set({
           isAuthenticated: true,
+          authenticatedAt: now,
           otpCodes: updatedCodes,
         });
-        setAuthCookie(true);
+        setAuthCookie(true, SESSION_DURATION_SECONDS);
 
         return {
           success: true,
-          message: "Passcode verified! Unlocking access...",
+          message: "Passcode verified! Access granted for 20 minutes.",
           codeObj: updatedCodes[existingIndex],
         };
       },
 
       lockSite: () => {
-        set({ isAuthenticated: false });
+        set({ isAuthenticated: false, authenticatedAt: null });
         setAuthCookie(false);
       },
 
       unlockSite: () => {
-        set({ isAuthenticated: true });
-        setAuthCookie(true);
+        const now = Date.now();
+        set({ isAuthenticated: true, authenticatedAt: now });
+        setAuthCookie(true, SESSION_DURATION_SECONDS);
       },
 
       addCustomOtp: (rawCode: string, label?: string) => {
