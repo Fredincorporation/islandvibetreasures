@@ -313,73 +313,19 @@ export function OtpGate({ children }: OtpGateProps) {
                     </button>
                   </form>
 
-                  {/* Initial 10 Passcodes Quick-Access Accordion */}
-                  <div className="pt-4 border-t border-sand-200/80">
-                    <div className="flex items-center justify-between text-xs text-ocean-700 mb-2">
-                      <span className="font-semibold flex items-center gap-1.5">
-                        <ShieldCheck className="w-4 h-4 text-gold-600" />
-                        Available OTPs (10 Generated for Start)
-                      </span>
-                      
-                      <button
-                        type="button"
-                        onClick={() => setShowCodesPreview(!showCodesPreview)}
-                        className="text-ocean-600 hover:text-ocean-900 font-medium flex items-center gap-1"
-                      >
-                        {showCodesPreview ? (
-                          <>Hide Codes <EyeOff className="w-3.5 h-3.5" /></>
-                        ) : (
-                          <>Show Codes <Eye className="w-3.5 h-3.5" /></>
-                        )}
-                      </button>
-                    </div>
+                  {/* Private Owner Admin Trigger */}
+                  <div className="pt-4 border-t border-sand-200/80 flex flex-col items-center gap-2 text-xs text-ocean-600">
+                    <p className="text-[11px] text-ocean-600">
+                      Need a One-Time Password? Contact the site owner for an access code.
+                    </p>
 
-                    {showCodesPreview && (
-                      <div className="p-3 bg-white/80 rounded-xl border border-sand-300 text-left text-xs space-y-2 animate-slide-up">
-                        <p className="text-[11px] text-ocean-700 font-medium">
-                          Click any active One-Time Password below to auto-fill into the box:
-                        </p>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5 max-h-36 overflow-y-auto pr-1">
-                          {otpCodes.map((item) => (
-                            <button
-                              key={item.id}
-                              type="button"
-                              disabled={item.isUsed}
-                              onClick={() => {
-                                handleAutoFillCode(item.code);
-                                handleVerify(item.code);
-                              }}
-                              className={`px-2.5 py-1.5 rounded border font-mono text-center font-bold text-xs transition-all ${
-                                item.isUsed
-                                  ? "bg-sand-100 text-sand-400 border-sand-200 line-through cursor-not-allowed"
-                                  : "bg-gold-50 text-ocean-900 border-gold-300 hover:bg-gold-100 hover:border-gold-500 shadow-2xs"
-                              }`}
-                            >
-                              {item.code}
-                            </button>
-                          ))}
-                        </div>
-                        <div className="pt-1 flex justify-between items-center text-[10px] text-ocean-600">
-                          <span>Master Passcode: <strong className="font-mono text-ocean-900">{masterPasscode}</strong></span>
-                          <button
-                            type="button"
-                            onClick={() => setShowAdminModal(true)}
-                            className="text-ocean-700 underline hover:text-ocean-900 font-semibold"
-                          >
-                            Manage Passcodes
-                          </button>
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Open Admin Passcode Manager Modal Button */}
                     <button
                       type="button"
                       onClick={() => setShowAdminModal(true)}
-                      className="mt-3 text-xs text-ocean-600 hover:text-ocean-900 font-medium flex items-center justify-center gap-1.5 mx-auto py-1 px-3 rounded-lg hover:bg-sand-200/60 transition-colors"
+                      className="mt-1 text-[11px] text-ocean-600 hover:text-ocean-900 font-medium flex items-center justify-center gap-1.5 py-1 px-3 rounded-lg hover:bg-sand-200/60 transition-colors"
                     >
-                      <KeyRound className="w-3.5 h-3.5 text-gold-600" />
-                      <span>Open Passcode Manager / Admin Tools</span>
+                      <ShieldCheck className="w-3.5 h-3.5 text-gold-600" />
+                      <span>Owner / Admin Passcode Vault</span>
                     </button>
                   </div>
                 </div>
