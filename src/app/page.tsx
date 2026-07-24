@@ -364,6 +364,7 @@ export default function HomePage() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1 }}
+                className={col.title === "Vacation Essentials" ? "lg:col-span-2 lg:max-w-sm lg:mx-auto" : ""}
               >
                 <Link
                   href={col.href}

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useOtpStore, OtpCode } from "@/store/otp-store";
+import { useOtpStore, OtpCode, DEFAULT_MASTER_PASSCODE } from "@/store/otp-store";
 import { toast } from "sonner";
 import { 
   Key, 
@@ -172,7 +172,7 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
             <form onSubmit={handleAdminLogin} className="max-w-xs mx-auto space-y-3">
               <input
                 type="password"
-                placeholder="Enter Master Key (Default: ALOHA2026)"
+                placeholder={`Enter Master Key (Default: ${DEFAULT_MASTER_PASSCODE})`}
                 value={adminKeyInput}
                 onChange={(e) => {
                   setAdminKeyInput(e.target.value);
@@ -195,7 +195,7 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
             </form>
 
             <p className="text-[11px] text-ocean-600 italic">
-              Default Master Key: <code className="bg-sand-200 px-1.5 py-0.5 rounded font-mono text-ocean-900 font-bold">ALOHA2026</code>
+              This owner-only key is stored privately and remains fixed for the site owner.
             </p>
           </div>
         ) : (
@@ -284,15 +284,11 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
                 ) : (
                   <div className="mt-2 flex items-center justify-between">
                     <span className="font-mono text-sm font-bold text-ocean-900 bg-white px-2.5 py-1 rounded border border-gold-200">
-                      {masterPasscode}
+                      ••••••••••••••
                     </span>
-                    <button
-                      onClick={() => handleCopy(masterPasscode, "master")}
-                      className="p-1 text-ocean-600 hover:text-ocean-900 rounded hover:bg-gold-100"
-                      title="Copy Master Key"
-                    >
-                      <Copy className="w-3.5 h-3.5" />
-                    </button>
+                    <span className="text-[11px] text-ocean-600 italic">
+                      Private owner key
+                    </span>
                   </div>
                 )}
                 <p className="text-[11px] text-ocean-700/80 mt-1">

@@ -33,6 +33,8 @@ function normalizeCode(str: string): string {
   return str.trim().toUpperCase().replace(/[\s\-_]/g, "");
 }
 
+export const DEFAULT_MASTER_PASSCODE = "BIGFREDFOREVER2099";
+
 const SESSION_DURATION_SECONDS = 20 * 60; // 20 minutes (1200 seconds)
 
 function setAuthCookie(value: boolean, maxAgeSeconds: number = SESSION_DURATION_SECONDS) {
@@ -74,7 +76,7 @@ export const useOtpStore = create<OtpState>()(
       authenticatedAt: null,
       singleUseMode: true,
       otpCodes: INITIAL_OTP_CODES,
-      masterPasscode: "BIGFREDFOREVER2099",
+      masterPasscode: DEFAULT_MASTER_PASSCODE,
       hasHydrated: false,
 
       verifyOtp: (inputCode: string) => {
@@ -209,7 +211,8 @@ export const useOtpStore = create<OtpState>()(
       },
 
       setMasterPasscode: (code: string) => {
-        set({ masterPasscode: code });
+        void code;
+        set({ masterPasscode: DEFAULT_MASTER_PASSCODE });
       },
 
       setHasHydrated: (val: boolean) => {
@@ -221,6 +224,7 @@ export const useOtpStore = create<OtpState>()(
       storage: createJSONStorage(() => localStorage),
       onRehydrateStorage: () => (state) => {
         if (state) {
+          state.masterPasscode = DEFAULT_MASTER_PASSCODE;
           state.setHasHydrated(true);
         }
       },
