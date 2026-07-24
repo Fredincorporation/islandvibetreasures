@@ -172,7 +172,7 @@ export function OtpAdminModal({ isOpen, onClose, onSelectCode }: OtpAdminModalPr
             <form onSubmit={handleAdminLogin} className="max-w-xs mx-auto space-y-3">
               <input
                 type="password"
-                placeholder={`Enter Master Key (Default: ${DEFAULT_MASTER_PASSCODE})`}
+                placeholder="Enter master key"
                 value={adminKeyInput}
                 onChange={(e) => {
                   setAdminKeyInput(e.target.value);
