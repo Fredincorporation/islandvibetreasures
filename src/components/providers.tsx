@@ -2,14 +2,11 @@
 
 import { Toaster } from "sonner";
 import { ReactNode } from "react";
-import { OtpGate } from "@/components/otp-gate";
 
 export function Providers({ children }: { children: ReactNode }) {
   return (
     <>
-      <OtpGate>
-        {children}
-      </OtpGate>
+      {children}
       <Toaster
         position="bottom-right"
         toastOptions={{
@@ -25,4 +22,3 @@ export function Providers({ children }: { children: ReactNode }) {
     </>
   );
 }
-
